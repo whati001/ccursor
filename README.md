@@ -21,7 +21,7 @@ The library can be used as follows to parse an integer value from a fixed sized 
 char* str = "PRE+10,20,0x1234";
 
 // initiate new ccursor handle
-bool ret = false; 
+ccursor_ret_t ret = false; 
 ccursor_handle_t handle;
 ret = ccursor_init(&handle, str, strlen(str));
 
@@ -30,16 +30,16 @@ uint8_t first = 0;
 uint16_t second = 0;
 uint32_t third = 0;
 
-ret &= ccursor_skip_substr(&handle, "PRE+");
-ret &= ccursor_read_u8(&handle, &first);
-ret &= ccursor_skip_char(&handle, ',');
-ret &= ccursor_read_u16(&handle, &second);
-ret &= ccursor_skip_char(&handle, ',');
-ret &= ccursor_read_u32_be(&handle, &third);
-ret &= ccursor_is_empty(&handle);
+ret |= ccursor_skip_substr(&handle, "PRE+");
+ret |= ccursor_read_u8(&handle, &first);
+ret |= ccursor_skip_char(&handle, ',');
+ret |= ccursor_read_u16(&handle, &second);
+ret |= ccursor_skip_char(&handle, ',');
+ret |= ccursor_read_u32_be(&handle, &third);
+ret |= ccursor_is_empty(&handle);
 
 // validate values
-assert(ret == true);
+assert(ret == E_CCURSOR_OK);
 assert(first == 10);
 assert(second == 20);
 assert(third == 0x1234);
@@ -50,7 +50,7 @@ If it is only desired to parse a single value, the library provides the `SINGLE_
 ```c
 // parse a single value
 uint8_t value = 0;
-bool ret = ccursor_read_u8(SINGLE_SHOT("20"), &value);
+ccursor_ret_t ret = ccursor_read_u8(SINGLE_SHOT("20"), &value);
 assert(value == 20);
 ```
 
