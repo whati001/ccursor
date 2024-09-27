@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <string.h>
 
+
 #include "ccursor.h"
 
 void test_error() {
@@ -17,7 +18,7 @@ void test_error() {
     // now we apply a parsing error and validate if both errors can be matched
     uint8_t num;
     char *str2 = "-10";
-    ret |= ccursor_init(&handle, str, strlen(str));
+    ret |= ccursor_init(&handle, str2, strlen(str2));
     ret |= ccursor_read_u8(&handle, &num);
     // generates a E_CCURSOR_ERR_PARAM
     assert(true == CCURSOR_IS_ERROR(ret));
