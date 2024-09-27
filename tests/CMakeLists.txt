@@ -19,3 +19,7 @@ add_test(NAME StringTests COMMAND str)
 add_executable(extn extn.c)   
 target_link_libraries(extn ccursor)
 add_test(NAME Extension COMMAND extn)
+
+add_executable(error error.c)   
+target_link_libraries(error ccursor)
+add_test(NAME Error COMMAND error)
