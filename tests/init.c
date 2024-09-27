@@ -6,12 +6,12 @@
 
 void success() {
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "SKIP+10,20";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
 
-    assert(ret == true);
+    assert(ret == E_CCURSOR_RET_OK);
     assert(handle.buffer == handle.read_position);
     assert(handle.buffer_size == strlen(str));
 
@@ -22,12 +22,12 @@ void success() {
 
 void fail() {
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "SKIP+10,20";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, 5);
 
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR_NOT_TERMINATED);
     assert(handle.buffer == NULL);
     assert(handle.buffer_size == 0);
 
@@ -36,12 +36,12 @@ void fail() {
   }
 
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "SKIP+10,20";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, 50);
 
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR_NOT_TERMINATED);
     assert(handle.buffer == NULL);
     assert(handle.buffer_size == 0);
 
@@ -50,12 +50,12 @@ void fail() {
   }
 
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
 
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR_PARAM);
     assert(handle.buffer == NULL);
     assert(handle.buffer_size == 0);
 
