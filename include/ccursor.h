@@ -9,12 +9,14 @@
  * @brief Char cursor return codes
  *
  * Positive return codes indicate success, while negative return codes indicate
+ * Please use return codes of the power of 2. This allows to combine multiple
+ * error codes.
  */
 typedef enum : int8_t {
-  E_CCURSOR_RET_OK = 0,              /**< Operation successful */
+  E_CCURSOR_OK = 0,                  /**< Operation successful */
   E_CCURSOR_ERR_PARAM = -1,          /**< Invalid parameter */
   E_CCURSOR_ERR_NOT_TERMINATED = -2, /**< Buffer not null-terminated */
-  E_CCURSOR_ERR_PARSE = -3,          /**< Parsing error */
+  E_CCURSOR_ERR_PARSE = -4,          /**< Parsing error */
 } ccursor_ret_t;
 
 /**

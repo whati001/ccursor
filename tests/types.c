@@ -15,7 +15,7 @@ void test_byte() {
     // parse
     uint8_t value = 0;
     ret = ccursor_read_byte(&handle, &value);
-    assert(ret == E_CCURSOR_RET_OK);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'B');
     ret = ccursor_is_empty(&handle);
     assert(ret == true);
@@ -33,7 +33,7 @@ void test_char() {
     // parse
     char value = '0';
     ret = ccursor_read_char(&handle, &value);
-    assert(ret == E_CCURSOR_RET_OK);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'B');
     ret = ccursor_is_empty(&handle);
     assert(ret == true);

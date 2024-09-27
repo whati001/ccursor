@@ -11,7 +11,7 @@ void success() {
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
 
-    assert(ret == E_CCURSOR_RET_OK);
+    assert(ret == E_CCURSOR_OK);
     assert(handle.buffer == handle.read_position);
     assert(handle.buffer_size == strlen(str));
 
