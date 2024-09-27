@@ -7,32 +7,32 @@
 void test_skip_char() {
   // test valid skip
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "BC";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
     // parse
     char value = '0';
-    ret &= ccursor_skip_char(&handle, 'B');
-    ret &= ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    ret = ccursor_skip_char(&handle, 'B');
+    ret = ccursor_read_char(&handle, &value);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'C');
-    ret &= ccursor_is_empty(&handle);
+    ret = ccursor_is_empty(&handle);
     assert(ret == true);
   }
 
   // test invalid skip
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "BC";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
     // parse
     char value = '0';
     ret = ccursor_skip_char(&handle, 'C');
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR_PARSE);
     ret = ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'B');
     ret = ccursor_is_empty(&handle);
     assert(ret == false);
@@ -42,15 +42,15 @@ void test_skip_char() {
 void test_skip_until_char() {
   // test valid skip
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "AK_TEST";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
     // parse
     char value = '0';
-    ret &= ccursor_skip_until_char(&handle, '_');
-    ret &= ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    ret = ccursor_skip_until_char(&handle, '_');
+    ret = ccursor_read_char(&handle, &value);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'T');
     ret = ccursor_is_empty(&handle);
     assert(ret == false);
@@ -58,16 +58,16 @@ void test_skip_until_char() {
 
   // test invalid skip
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "AK_TEST";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
     // parse
     char value = '0';
     ret = ccursor_skip_until_char(&handle, ' ');
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR_PARSE);
     ret = ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
     assert(ret == false);
@@ -77,32 +77,32 @@ void test_skip_until_char() {
 void test_skip_substr() {
   // test valid skip
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "AK_T";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
     // parse
     char value = '0';
-    ret &= ccursor_skip_substr(&handle, "AK_");
-    ret &= ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    ret = ccursor_skip_substr(&handle, "AK_");
+    ret = ccursor_read_char(&handle, &value);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'T');
-    ret &= ccursor_is_empty(&handle);
+    ret = ccursor_is_empty(&handle);
     assert(ret == true);
   }
 
   // test invalid skip
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "AK_T";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
     // parse
     char value = '0';
     ret = ccursor_skip_substr(&handle, "__");
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR_PARSE);
     ret = ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
     assert(ret == false);
@@ -110,16 +110,16 @@ void test_skip_substr() {
 
   // test invalid skip
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "AK_TEST_AFTER";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
     // parse
     char value = '0';
     ret = ccursor_skip_substr(&handle, "TEST");
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR_PARSE);
     ret = ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
     assert(ret == false);
@@ -129,32 +129,32 @@ void test_skip_substr() {
 void test_skip_until_substr() {
   // test valid skip
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "AK_T";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
     // parse
     char value = '0';
-    ret &= ccursor_skip_until_substr(&handle, "AK_");
-    ret &= ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    ret = ccursor_skip_until_substr(&handle, "AK_");
+    ret = ccursor_read_char(&handle, &value);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'T');
-    ret &= ccursor_is_empty(&handle);
+    ret = ccursor_is_empty(&handle);
     assert(ret == true);
   }
 
   // test skip until
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "AK_TEST_AFTER";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
     // parse
     char value = '0';
     ret = ccursor_skip_until_substr(&handle, "TEST_");
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     ret = ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
     assert(ret == false);
@@ -162,30 +162,30 @@ void test_skip_until_substr() {
 
   // test skip until
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "AK_TEST_AFTER";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
     // parse
     char value = '0';
     ret = ccursor_skip_until_substr(&handle, "AFTER");
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     ret = ccursor_is_empty(&handle);
     assert(ret == true);
   }
 
   // test invalid skip
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "AK_T";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
     // parse
     char value = '0';
     ret = ccursor_skip_until_substr(&handle, "__");
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR_PARSE);
     ret = ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
     assert(ret == false);
@@ -193,16 +193,16 @@ void test_skip_until_substr() {
 
   // test invalid skip
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "AK_TEST";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
     // parse
     char value = '0';
     ret = ccursor_skip_until_substr(&handle, "TESTA");
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR_PARSE);
     ret = ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
     assert(ret == false);
@@ -212,7 +212,7 @@ void test_skip_until_substr() {
 void test_read_substr() {
   // test valid substr read
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "AK_TEST_AFTER";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
@@ -220,10 +220,10 @@ void test_read_substr() {
     char value = ' ';
     char buf[100];
     ret = ccursor_read_substr(&handle, buf, 3);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     assert(0 == strncmp("AK_", buf, 3));
     ret = ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'T');
     ret = ccursor_is_empty(&handle);
     assert(ret == false);
@@ -231,7 +231,7 @@ void test_read_substr() {
 
   // test valid substr read
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "AK";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
@@ -239,9 +239,9 @@ void test_read_substr() {
     char value = ' ';
     char buf[100];
     ret = ccursor_read_substr(&handle, buf, 3);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR_PARSE);
     ret = ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
     assert(ret == false);
@@ -251,7 +251,7 @@ void test_read_substr() {
 void test_substr_until_char() {
   // test valid substr read
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "AK_TEST_AFTER";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
@@ -260,11 +260,11 @@ void test_substr_until_char() {
     char value = ' ';
     char buf[100];
     ret = ccursor_read_substr_until_char(&handle, buf, 100, 'T', &read);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     assert(read == 3);
     assert(0 == strncmp("AK_", buf, 3));
     ret = ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'E');
     ret = ccursor_is_empty(&handle);
     assert(ret == false);
@@ -272,7 +272,7 @@ void test_substr_until_char() {
 
   // test valid substr read
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "AK";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
@@ -281,9 +281,9 @@ void test_substr_until_char() {
     char value = ' ';
     char buf[100];
     ret = ccursor_read_substr_until_char(&handle, buf, 100, '_', &read);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR_PARSE);
     ret = ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
     assert(ret == false);
@@ -293,7 +293,7 @@ void test_substr_until_char() {
 void test_trim_left() {
   // test valid trim left
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "   AK_TEST";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
@@ -301,9 +301,9 @@ void test_trim_left() {
     char value = ' ';
     char buf[100];
     ret = ccursor_trim_left(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     ret = ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
     assert(ret == false);
@@ -311,7 +311,7 @@ void test_trim_left() {
 
   // test valid trim left
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "   ";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
@@ -319,14 +319,14 @@ void test_trim_left() {
     char value = ' ';
     char buf[100];
     ret = ccursor_trim_left(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     ret = ccursor_is_empty(&handle);
     assert(ret == true);
   }
 
   // test invalid trim left
   {
-    bool ret = false;
+    ccursor_ret_t ret;
     char *str = "AK_TEST";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
@@ -334,9 +334,9 @@ void test_trim_left() {
     char value = ' ';
     char buf[100];
     ret = ccursor_trim_left(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_OK);
     ret = ccursor_read_char(&handle, &value);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
     assert(ret == false);

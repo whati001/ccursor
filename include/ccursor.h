@@ -6,6 +6,36 @@
 #include <stdint.h>
 
 /**
+ * @brief Char cursor return codes
+ *
+ * Positive return codes indicate success, while negative return codes indicate
+ * Please use return codes of the power of 2. This allows to combine multiple
+ * error codes.
+ */
+typedef enum : int8_t {
+  E_CCURSOR_OK = 0,                  /**< Operation successful */
+  E_CCURSOR_ERR_PARAM = -1,          /**< Invalid parameter */
+  E_CCURSOR_ERR_NOT_TERMINATED = -2, /**< Buffer not null-terminated */
+  E_CCURSOR_ERR_PARSE = -3,          /**< Parsing error */
+} ccursor_ret_t;
+
+/**
+ * @brief Helper macros to check if parsing failed
+ *
+ * @param[in] ret - The return code to check
+ * @return true if the return code indicates an error, else false
+ */
+#define CCURSOR_IS_ERROR(ret) ((ret) < 0)
+
+/**
+ * @brief Helper macros to check if parsing was successful
+ *
+ * @param[in] ret - The return code to check
+ * @return true if the return code indicates success, else false
+ */
+#define CCURSOR_IS_OK(ret) ((ret) == E_CCURSOR_OK)
+
+/**
  * @brief Char cursor handle
  *
  * This structure holds the char cursor handle.
@@ -39,9 +69,12 @@ typedef struct {
  * @param[in,out] handle        - The char cursor handle
  * @param[in]     buffer        - The buffer to be parsed
  * @param[in]     buffer_size   - The size of the buffer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle, buffer, or buffer_size is NULL
+ * @return E_CCURSOR_ERR_NOT_TERMINATED if the buffer is not null-terminated
  */
-bool ccursor_init(ccursor_handle_t *handle, char *buffer, uint32_t buffer_size);
+ccursor_ret_t ccursor_init(ccursor_handle_t *handle, char *buffer,
+                           uint32_t buffer_size);
 
 /**
  * @brief Retrieves the current available/left over characters in the buffer
@@ -70,9 +103,11 @@ bool ccursor_is_empty(ccursor_handle_t *handle);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 32-bit unsigned integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_u32(ccursor_handle_t *handle, uint32_t *value);
+ccursor_ret_t ccursor_read_u32(ccursor_handle_t *handle, uint32_t *value);
 
 /**
  * @brief Retrieves a 16-bit unsigned integer from the stream
@@ -82,9 +117,11 @@ bool ccursor_read_u32(ccursor_handle_t *handle, uint32_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 16-bit unsigned integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_u16(ccursor_handle_t *handle, uint16_t *value);
+ccursor_ret_t ccursor_read_u16(ccursor_handle_t *handle, uint16_t *value);
 
 /**
  * @brief Retrieves an 8-bit unsigned integer from the stream
@@ -94,9 +131,11 @@ bool ccursor_read_u16(ccursor_handle_t *handle, uint16_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 8-bit unsigned integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_u8(ccursor_handle_t *handle, uint8_t *value);
+ccursor_ret_t ccursor_read_u8(ccursor_handle_t *handle, uint8_t *value);
 
 /**
  * @brief Retrieves a 32-bit integer from the stream
@@ -106,9 +145,11 @@ bool ccursor_read_u8(ccursor_handle_t *handle, uint8_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 32-bit integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_i32(ccursor_handle_t *handle, int32_t *value);
+ccursor_ret_t ccursor_read_i32(ccursor_handle_t *handle, int32_t *value);
 
 /**
  * @brief Retrieves a 16-bit integer from the stream
@@ -118,9 +159,11 @@ bool ccursor_read_i32(ccursor_handle_t *handle, int32_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 16-bit integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_i16(ccursor_handle_t *handle, int16_t *value);
+ccursor_ret_t ccursor_read_i16(ccursor_handle_t *handle, int16_t *value);
 
 /**
  * @brief Retrieves an 8-bit integer from the stream
@@ -130,9 +173,11 @@ bool ccursor_read_i16(ccursor_handle_t *handle, int16_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 8-bit integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_i8(ccursor_handle_t *handle, int8_t *value);
+ccursor_ret_t ccursor_read_i8(ccursor_handle_t *handle, int8_t *value);
 
 /**
  * @brief Retrieves a 32-bit unsigned integer from the stream as little-endian
@@ -143,9 +188,11 @@ bool ccursor_read_i8(ccursor_handle_t *handle, int8_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 32-bit unsigned integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_u32_le(ccursor_handle_t *handle, uint32_t *value);
+ccursor_ret_t ccursor_read_u32_le(ccursor_handle_t *handle, uint32_t *value);
 
 /**
  * @brief Retrieves a 16-bit unsigned integer from the stream as little-endian
@@ -156,9 +203,11 @@ bool ccursor_read_u32_le(ccursor_handle_t *handle, uint32_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 16-bit unsigned integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_u16_le(ccursor_handle_t *handle, uint16_t *value);
+ccursor_ret_t ccursor_read_u16_le(ccursor_handle_t *handle, uint16_t *value);
 
 /**
  * @brief Retrieves an 8-bit unsigned integer from the stream as little-endian
@@ -169,9 +218,11 @@ bool ccursor_read_u16_le(ccursor_handle_t *handle, uint16_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 8-bit unsigned integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_u8_le(ccursor_handle_t *handle, uint8_t *value);
+ccursor_ret_t ccursor_read_u8_le(ccursor_handle_t *handle, uint8_t *value);
 
 /**
  * @brief Retrieves a 32-bit signed integer from the stream as little-endian
@@ -182,9 +233,11 @@ bool ccursor_read_u8_le(ccursor_handle_t *handle, uint8_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 32-bit signed integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_i32_le(ccursor_handle_t *handle, int32_t *value);
+ccursor_ret_t ccursor_read_i32_le(ccursor_handle_t *handle, int32_t *value);
 
 /**
  * @brief Retrieves a 16-bit signed integer from the stream as little-endian
@@ -195,9 +248,11 @@ bool ccursor_read_i32_le(ccursor_handle_t *handle, int32_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 16-bit signed integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_i16_le(ccursor_handle_t *handle, int16_t *value);
+ccursor_ret_t ccursor_read_i16_le(ccursor_handle_t *handle, int16_t *value);
 
 /**
  * @brief Retrieves an 8-bit signed integer from the stream as little-endian
@@ -208,9 +263,11 @@ bool ccursor_read_i16_le(ccursor_handle_t *handle, int16_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 8-bit signed integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_i8_le(ccursor_handle_t *handle, int8_t *value);
+ccursor_ret_t ccursor_read_i8_le(ccursor_handle_t *handle, int8_t *value);
 
 /**
  * @brief Retrieves a 32-bit unsigned integer from the stream as big-endian
@@ -221,9 +278,11 @@ bool ccursor_read_i8_le(ccursor_handle_t *handle, int8_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 32-bit unsigned integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_u32_be(ccursor_handle_t *handle, uint32_t *value);
+ccursor_ret_t ccursor_read_u32_be(ccursor_handle_t *handle, uint32_t *value);
 
 /**
  * @brief Retrieves a 16-bit unsigned integer from the stream as big-endian
@@ -234,9 +293,11 @@ bool ccursor_read_u32_be(ccursor_handle_t *handle, uint32_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 16-bit unsigned integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_u16_be(ccursor_handle_t *handle, uint16_t *value);
+ccursor_ret_t ccursor_read_u16_be(ccursor_handle_t *handle, uint16_t *value);
 
 /**
  * @brief Retrieves an 8-bit unsigned integer from the stream as big-endian
@@ -247,9 +308,11 @@ bool ccursor_read_u16_be(ccursor_handle_t *handle, uint16_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 8-bit unsigned integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_u8_be(ccursor_handle_t *handle, uint8_t *value);
+ccursor_ret_t ccursor_read_u8_be(ccursor_handle_t *handle, uint8_t *value);
 
 /**
  * @brief Retrieves a 32-bit signed integer from the stream as big-endian
@@ -260,9 +323,11 @@ bool ccursor_read_u8_be(ccursor_handle_t *handle, uint8_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 32-bit signed integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_i32_be(ccursor_handle_t *handle, int32_t *value);
+ccursor_ret_t ccursor_read_i32_be(ccursor_handle_t *handle, int32_t *value);
 
 /**
  * @brief Retrieves a 16-bit signed integer from the stream as big-endian
@@ -273,9 +338,11 @@ bool ccursor_read_i32_be(ccursor_handle_t *handle, int32_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 16-bit signed integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_i16_be(ccursor_handle_t *handle, int16_t *value);
+ccursor_ret_t ccursor_read_i16_be(ccursor_handle_t *handle, int16_t *value);
 
 /**
  * @brief Retrieves an 8-bit signed integer from the stream as big-endian
@@ -286,9 +353,11 @@ bool ccursor_read_i16_be(ccursor_handle_t *handle, int16_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved 8-bit signed integer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_i8_be(ccursor_handle_t *handle, int8_t *value);
+ccursor_ret_t ccursor_read_i8_be(ccursor_handle_t *handle, int8_t *value);
 
 /**
  * @brief Retrieves a byte from the stream
@@ -298,9 +367,11 @@ bool ccursor_read_i8_be(ccursor_handle_t *handle, int8_t *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    byte          - The retrieved byte
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_byte(ccursor_handle_t *handle, uint8_t *byte);
+ccursor_ret_t ccursor_read_byte(ccursor_handle_t *handle, uint8_t *byte);
 
 /**
  * @brief Retrieves a boolean value from the stream
@@ -310,9 +381,11 @@ bool ccursor_read_byte(ccursor_handle_t *handle, uint8_t *byte);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    value         - The retrieved boolean value
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_bool(ccursor_handle_t *handle, bool *value);
+ccursor_ret_t ccursor_read_bool(ccursor_handle_t *handle, bool *value);
 
 /**
  * @brief Retrieves a character from the stream
@@ -322,9 +395,11 @@ bool ccursor_read_bool(ccursor_handle_t *handle, bool *value);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[out]    c             - The retrieved character
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_char(ccursor_handle_t *handle, char *c);
+ccursor_ret_t ccursor_read_char(ccursor_handle_t *handle, char *c);
 
 /**
  * @brief Skips a character in the stream
@@ -334,9 +409,11 @@ bool ccursor_read_char(ccursor_handle_t *handle, char *c);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[in]     c             - The character to skip
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_skip_char(ccursor_handle_t *handle, char c);
+ccursor_ret_t ccursor_skip_char(ccursor_handle_t *handle, char c);
 
 /**
  * @brief Skips characters in the stream until a specified character is found
@@ -347,9 +424,11 @@ bool ccursor_skip_char(ccursor_handle_t *handle, char c);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[in]     c             - The character to stop skipping after it
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_skip_until_char(ccursor_handle_t *handle, uint8_t c);
+ccursor_ret_t ccursor_skip_until_char(ccursor_handle_t *handle, uint8_t c);
 
 /**
  * @brief Skips substring at the beginning of the stream
@@ -359,9 +438,11 @@ bool ccursor_skip_until_char(ccursor_handle_t *handle, uint8_t c);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[in]     substr        - The substring to skip
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_skip_substr(ccursor_handle_t *handle, const char *substr);
+ccursor_ret_t ccursor_skip_substr(ccursor_handle_t *handle, const char *substr);
 
 /**
  * @brief Skips characters in the stream until a specified substring is found
@@ -372,9 +453,12 @@ bool ccursor_skip_substr(ccursor_handle_t *handle, const char *substr);
  *
  * @param[in,out] handle        - The char cursor handle
  * @param[in]     substr        - The substring to stop skipping at
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_skip_until_substr(ccursor_handle_t *handle, const char *substr);
+ccursor_ret_t ccursor_skip_until_substr(ccursor_handle_t *handle,
+                                        const char *substr);
 
 /**
  * @brief Reads a substring from the stream
@@ -387,9 +471,12 @@ bool ccursor_skip_until_substr(ccursor_handle_t *handle, const char *substr);
  * @param[out]    substr        - The retrieved substring
  * @param[in]     size          - The size of the substring (excluding null
  *                                terminator)
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_substr(ccursor_handle_t *handle, char *substr, size_t size);
+ccursor_ret_t ccursor_read_substr(ccursor_handle_t *handle, char *substr,
+                                  size_t size);
 
 /**
  * @brief Reads a substring from the stream until a specified character is found
@@ -405,10 +492,13 @@ bool ccursor_read_substr(ccursor_handle_t *handle, char *substr, size_t size);
  * @param[in]     c             - The character to stop reading at
  * @param[out]    written       - The number of characters written to the substr
  *                                buffer
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
+ * @return E_CCURSOR_ERR_PARSE on error
  */
-bool ccursor_read_substr_until_char(ccursor_handle_t *handle, char *substr,
-                                    size_t size, char c, size_t *written);
+ccursor_ret_t ccursor_read_substr_until_char(ccursor_handle_t *handle,
+                                             char *substr, size_t size, char c,
+                                             size_t *written);
 
 /**
  * @brief Trims leading whitespace characters from the stream
@@ -417,8 +507,9 @@ bool ccursor_read_substr_until_char(ccursor_handle_t *handle, char *substr,
  * handle. It advances the current position in the buffer accordingly.
  *
  * @param[in,out] handle        - The char cursor handle
- * @return true on parsing success, else false
+ * @return E_CCURSOR_RET_OK on success
+ * @return E_CCURSOR_ERR_PARAM if the handle or value is NULL
  */
-bool ccursor_trim_left(ccursor_handle_t *handle);
+ccursor_ret_t ccursor_trim_left(ccursor_handle_t *handle);
 
 #endif // CCURSOR_HEADER
