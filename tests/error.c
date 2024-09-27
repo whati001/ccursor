@@ -2,8 +2,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include <stdio.h>
-
 #include "ccursor.h"
 
 void test_error() {
@@ -12,7 +10,6 @@ void test_error() {
     char *str = "";
     ccursor_handle_t handle;
     ret = ccursor_init(&handle, str, strlen(str));
-    printf("ret: %d\n", ret);
     // generates a E_CCURSOR_ERR_PARAM
     assert(true == CCURSOR_IS_ERROR(ret));
     assert(false == CCURSOR_IS_OK(ret));

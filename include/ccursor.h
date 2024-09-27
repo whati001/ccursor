@@ -11,8 +11,9 @@
  * Positive return codes indicate success, while negative return codes indicate
  * Please use return codes of the power of 2. This allows to combine multiple
  * error codes.
+ * If you use C23, you can specify the size of the enum via : int8_t
  */
-typedef enum : int8_t {
+typedef enum {
   E_CCURSOR_OK = 0,                  /**< Operation successful */
   E_CCURSOR_ERR_PARAM = -1,          /**< Invalid parameter */
   E_CCURSOR_ERR_NOT_TERMINATED = -2, /**< Buffer not null-terminated */
@@ -25,7 +26,7 @@ typedef enum : int8_t {
  * @param[in] ret - The return code to check
  * @return true if the return code indicates an error, else false
  */
-#define CCURSOR_IS_ERROR(ret) ((ret) < 0)
+#define CCURSOR_IS_ERROR(ret) (((int8_t)(ret)) < ((int8_t)0))
 
 /**
  * @brief Helper macros to check if parsing was successful
@@ -33,7 +34,7 @@ typedef enum : int8_t {
  * @param[in] ret - The return code to check
  * @return true if the return code indicates success, else false
  */
-#define CCURSOR_IS_OK(ret) ((ret) == E_CCURSOR_OK)
+#define CCURSOR_IS_OK(ret) (((int8_t)(ret)) == ((int8_t)E_CCURSOR_OK))
 
 /**
  * @brief Char cursor handle
