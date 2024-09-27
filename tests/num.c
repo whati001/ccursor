@@ -19,7 +19,7 @@ void test_u32() {
     assert(num == 4294967295);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test some min value
@@ -36,7 +36,7 @@ void test_u32() {
     assert(num == 0);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test some random intermidiate value
@@ -53,7 +53,7 @@ void test_u32() {
     assert(num == 2711);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test some invalid number
@@ -71,7 +71,7 @@ void test_u32() {
     assert(handle.buffer == handle.read_position);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 
   // test something invalid
@@ -89,7 +89,7 @@ void test_u32() {
     assert(handle.buffer == handle.read_position);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -108,7 +108,7 @@ void test_u16() {
     assert(num == 65535);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test some min value
@@ -125,7 +125,7 @@ void test_u16() {
     assert(num == 0);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test some random intermediate value
@@ -143,7 +143,7 @@ void test_u16() {
     assert(num == 1234);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test some invalid number
@@ -161,7 +161,7 @@ void test_u16() {
     assert(handle.buffer == handle.read_position);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 
   // test something invalid
@@ -179,7 +179,7 @@ void test_u16() {
     assert(handle.buffer == handle.read_position);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -198,7 +198,7 @@ void test_u8() {
     assert(num == 255);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test some min value
@@ -216,7 +216,7 @@ void test_u8() {
     assert(num == 0);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test some random intermediate value
@@ -233,7 +233,7 @@ void test_u8() {
     assert(num == 42);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test some invalid number
@@ -251,7 +251,7 @@ void test_u8() {
     assert(handle.buffer == handle.read_position);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 
   // test something invalid
@@ -269,7 +269,7 @@ void test_u8() {
     assert(handle.buffer == handle.read_position);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -288,7 +288,7 @@ void test_i32() {
     assert(num == 2147483647);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test min value
@@ -306,7 +306,7 @@ void test_i32() {
     assert(num == -2147483648);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test some random intermediate value
@@ -323,7 +323,7 @@ void test_i32() {
     assert(num == 12345);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test some invalid number
@@ -341,7 +341,7 @@ void test_i32() {
     assert(handle.buffer == handle.read_position);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -360,7 +360,7 @@ void test_i16() {
     assert(num == 32767);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test min value
@@ -378,7 +378,7 @@ void test_i16() {
     assert(num == -32768);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test some random intermediate value
@@ -395,7 +395,7 @@ void test_i16() {
     assert(num == 1234);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test some invalid number
@@ -413,7 +413,7 @@ void test_i16() {
     assert(handle.buffer == handle.read_position);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -432,7 +432,7 @@ void test_i8() {
     assert(num == 127);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test min value
@@ -450,7 +450,7 @@ void test_i8() {
     assert(num == -128);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test some random intermediate value
@@ -467,7 +467,7 @@ void test_i8() {
     assert(num == 42);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test some invalid number
@@ -485,7 +485,7 @@ void test_i8() {
     assert(handle.buffer == handle.read_position);
 
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -503,7 +503,7 @@ void test_u32_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 4278190079);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some min value
   {
@@ -518,7 +518,7 @@ void test_u32_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 0);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some random intermediate value
   {
@@ -533,7 +533,7 @@ void test_u32_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 2018915346);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some invalid number
   {
@@ -550,7 +550,7 @@ void test_u32_le() {
     assert(num == 0);
     assert(handle.buffer == handle.read_position);
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -568,7 +568,7 @@ void test_u32_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 4294967294);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some min value
   {
@@ -583,7 +583,7 @@ void test_u32_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 0);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some random intermediate value
   {
@@ -598,7 +598,7 @@ void test_u32_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 305419896);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some invalid number
   {
@@ -614,7 +614,7 @@ void test_u32_be() {
     assert(num == 0);
     assert(handle.buffer == handle.read_position);
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -632,7 +632,7 @@ void test_u16_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 65535);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some min value
   {
@@ -647,7 +647,7 @@ void test_u16_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 0);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some random intermediate value
   {
@@ -662,7 +662,7 @@ void test_u16_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 13330);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some invalid number
   {
@@ -678,7 +678,7 @@ void test_u16_le() {
     assert(num == 0);
     assert(handle.buffer == handle.read_position);
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -696,7 +696,7 @@ void test_u16_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 65535);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some min value
   {
@@ -711,7 +711,7 @@ void test_u16_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 0);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some random intermediate value
   {
@@ -726,7 +726,7 @@ void test_u16_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 4660);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some invalid number
   {
@@ -742,7 +742,7 @@ void test_u16_be() {
     assert(num == 0);
     assert(handle.buffer == handle.read_position);
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -760,7 +760,7 @@ void test_u8_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 255);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some min value
   {
@@ -775,7 +775,7 @@ void test_u8_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 0);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some random intermediate value
   {
@@ -790,7 +790,7 @@ void test_u8_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 66);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some invalid number
   {
@@ -806,7 +806,7 @@ void test_u8_le() {
     assert(num == 0);
     assert(handle.buffer == handle.read_position);
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -824,7 +824,7 @@ void test_u8_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 255);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some min value
   {
@@ -839,7 +839,7 @@ void test_u8_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 0);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some random intermediate value
   {
@@ -854,7 +854,7 @@ void test_u8_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 66);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some invalid number
   {
@@ -870,7 +870,7 @@ void test_u8_be() {
     assert(num == 0);
     assert(handle.buffer == handle.read_position);
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -888,7 +888,7 @@ void test_i32_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == -129);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test min value
   {
@@ -903,7 +903,7 @@ void test_i32_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 128);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some random intermediate value
   {
@@ -918,7 +918,7 @@ void test_i32_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 2018915346);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some invalid number
   {
@@ -934,7 +934,7 @@ void test_i32_le() {
     assert(num == 0);
     assert(handle.buffer == handle.read_position);
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -952,7 +952,7 @@ void test_i16_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == -129);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test min value
   {
@@ -967,7 +967,7 @@ void test_i16_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 128);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some random intermediate value
   {
@@ -982,7 +982,7 @@ void test_i16_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 13330);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some invalid number
   {
@@ -998,7 +998,7 @@ void test_i16_le() {
     assert(num == 0);
     assert(handle.buffer == handle.read_position);
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -1016,7 +1016,7 @@ void test_i8_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 127);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test min value
   {
@@ -1031,7 +1031,7 @@ void test_i8_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == -128);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some random intermediate value
   {
@@ -1046,7 +1046,7 @@ void test_i8_le() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 66);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some invalid number
   {
@@ -1062,7 +1062,7 @@ void test_i8_le() {
     assert(num == 0);
     assert(handle.buffer == handle.read_position);
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -1080,7 +1080,7 @@ void test_i32_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 2147483647);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test min value
   {
@@ -1095,7 +1095,7 @@ void test_i32_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == -2147483648);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some random intermediate value
   {
@@ -1110,7 +1110,7 @@ void test_i32_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 305419896);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some invalid number
   {
@@ -1126,7 +1126,7 @@ void test_i32_be() {
     assert(num == 0);
     assert(handle.buffer == handle.read_position);
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -1144,7 +1144,7 @@ void test_i16_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 32767);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test min value
   {
@@ -1159,7 +1159,7 @@ void test_i16_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == -32768);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some random intermediate value
   {
@@ -1174,7 +1174,7 @@ void test_i16_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 4660);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some invalid number
   {
@@ -1190,7 +1190,7 @@ void test_i16_be() {
     assert(num == 0);
     assert(handle.buffer == handle.read_position);
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -1208,7 +1208,7 @@ void test_i8_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 127);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test min value
   {
@@ -1223,7 +1223,7 @@ void test_i8_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == -128);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some random intermediate value
   {
@@ -1238,7 +1238,7 @@ void test_i8_be() {
     assert(ret == E_CCURSOR_OK);
     assert(num == 66);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
   // test some invalid number
   {
@@ -1254,7 +1254,7 @@ void test_i8_be() {
     assert(num == 0);
     assert(handle.buffer == handle.read_position);
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 

@@ -2,7 +2,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-
 #include "ccursor.h"
 
 void test_error() {

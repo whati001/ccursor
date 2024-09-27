@@ -69,12 +69,15 @@ size_t ccursor_available(ccursor_handle_t *handle) {
   return CCURSOR_REMAINING_SIZE(handle);
 }
 
-bool ccursor_is_empty(ccursor_handle_t *handle) {
-  if (handle == NULL || handle->read_position >= CCURSOR_END(handle)) {
-    return true;
+ccursor_ret_t ccursor_is_empty(ccursor_handle_t *handle) {
+  if (handle == NULL) {
+    return E_CCURSOR_ERR_PARAM;
+  }
+  if (handle->read_position >= CCURSOR_END(handle)) {
+    return E_CCURSOR_OK;
   }
 
-  return false;
+  return E_CCURSOR_ERR;
 }
 
 ccursor_ret_t ccursor_read_u32(ccursor_handle_t *handle, uint32_t *value) {

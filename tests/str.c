@@ -18,7 +18,7 @@ void test_skip_char() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'C');
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test invalid skip
@@ -35,7 +35,7 @@ void test_skip_char() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'B');
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -53,7 +53,7 @@ void test_skip_until_char() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'T');
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 
   // test invalid skip
@@ -70,7 +70,7 @@ void test_skip_until_char() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -88,7 +88,7 @@ void test_skip_substr() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'T');
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test invalid skip
@@ -105,7 +105,7 @@ void test_skip_substr() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 
   // test invalid skip
@@ -122,7 +122,7 @@ void test_skip_substr() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -140,7 +140,7 @@ void test_skip_until_substr() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'T');
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test skip until
@@ -157,7 +157,7 @@ void test_skip_until_substr() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 
   // test skip until
@@ -171,7 +171,7 @@ void test_skip_until_substr() {
     ret = ccursor_skip_until_substr(&handle, "AFTER");
     assert(ret == E_CCURSOR_OK);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test invalid skip
@@ -188,7 +188,7 @@ void test_skip_until_substr() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 
   // test invalid skip
@@ -205,7 +205,7 @@ void test_skip_until_substr() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -226,7 +226,7 @@ void test_read_substr() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'T');
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 
   // test valid substr read
@@ -244,7 +244,7 @@ void test_read_substr() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -267,7 +267,7 @@ void test_substr_until_char() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'E');
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 
   // test valid substr read
@@ -286,7 +286,7 @@ void test_substr_until_char() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 
@@ -306,7 +306,7 @@ void test_trim_left() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 
   // test valid trim left
@@ -321,7 +321,7 @@ void test_trim_left() {
     ret = ccursor_trim_left(&handle);
     assert(ret == E_CCURSOR_OK);
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 
   // test invalid trim left
@@ -339,7 +339,7 @@ void test_trim_left() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'A');
     ret = ccursor_is_empty(&handle);
-    assert(ret == false);
+    assert(ret == E_CCURSOR_ERR);
   }
 }
 

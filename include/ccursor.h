@@ -15,9 +15,10 @@
  */
 typedef enum {
   E_CCURSOR_OK = 0,                  /**< Operation successful */
-  E_CCURSOR_ERR_PARAM = -1,          /**< Invalid parameter */
-  E_CCURSOR_ERR_NOT_TERMINATED = -2, /**< Buffer not null-terminated */
-  E_CCURSOR_ERR_PARSE = -3,          /**< Parsing error */
+  E_CCURSOR_ERR = -1,                /**< Generic error */
+  E_CCURSOR_ERR_PARAM = -2,          /**< Invalid parameter */
+  E_CCURSOR_ERR_NOT_TERMINATED = -3, /**< Buffer not null-terminated */
+  E_CCURSOR_ERR_PARSE = -4,          /**< Parsing error */
 } ccursor_ret_t;
 
 /**
@@ -92,9 +93,11 @@ size_t ccursor_available(ccursor_handle_t *handle);
  * buffer.
  *
  * @param[in]     handle        - The char cursor handle
- * @return true if the stream is empty, else false
+ * @return E_CCURSOR_RET_OK if the stream is empty
+ * @return E_CCURSOR_ERR_PARAM if the handle is NULL
+ * @return E_CCURSOR_ERR if the stream is not empty
  */
-bool ccursor_is_empty(ccursor_handle_t *handle);
+ccursor_ret_t ccursor_is_empty(ccursor_handle_t *handle);
 
 /**
  * @brief Retrieves a 32-bit unsigned integer from the stream

@@ -18,7 +18,7 @@ void test_byte() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'B');
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 }
 
@@ -36,7 +36,7 @@ void test_char() {
     assert(ret == E_CCURSOR_OK);
     assert(value == 'B');
     ret = ccursor_is_empty(&handle);
-    assert(ret == true);
+    assert(ret == E_CCURSOR_OK);
   }
 }
 
